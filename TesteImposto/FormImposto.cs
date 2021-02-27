@@ -1,16 +1,11 @@
 ﻿using Imposto.Core.Service;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Imposto.Core.Domain;
 using Imposto.Core.Data;
-using System.Text.RegularExpressions;
+using Imposto.Core.Util;
 
 namespace TesteImposto
 {
@@ -47,6 +42,7 @@ namespace TesteImposto
             table.Columns.Add(new DataColumn("Nome do produto", typeof(string)));
             table.Columns.Add(new DataColumn("Codigo do produto", typeof(string)));
             table.Columns.Add(new DataColumn("Valor", typeof(decimal)));
+            table.Columns.Add(new DataColumn("Desconto %", typeof(decimal)));
             table.Columns.Add(new DataColumn("Brinde", typeof(bool)));
                      
             return table;
@@ -91,6 +87,7 @@ namespace TesteImposto
                         Brinde = brinde,
                         CodigoProduto =  row["Codigo do produto"].ToString(),
                         NomeProduto = row["Nome do produto"].ToString(),
+                        Desconto = Convert.ToDouble(row["Desconto %"].ToString()),
                         ValorItemPedido = Convert.ToDouble(row["Valor"].ToString())            
                     });
             }
@@ -129,11 +126,7 @@ namespace TesteImposto
 
         private bool ValidarUF(string uf)
         {
-            List<String> listaUF = new List<string>();
-            listaUF.AddRange(new string[] {"AC", "AL", "AP", "AM", "BA", "CE", "DF", "GO", "ES", "MA",
-                "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
-                "RS", "RO", "RR", "SP", "SC", "SE", "TO", ""});
-
+            var listaUF = Common.ListaUF();
             return listaUF.Contains(uf);
         }
     }

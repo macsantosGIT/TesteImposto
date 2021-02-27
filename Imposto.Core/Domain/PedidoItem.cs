@@ -11,6 +11,7 @@ namespace Imposto.Core.Domain
         public string NomeProduto { get; set; }
         public string CodigoProduto { get; set; }        
         public double ValorItemPedido { get; set; }
+        public double Desconto { get; set; }
         public bool Brinde { get; set; }        
     }
 }
