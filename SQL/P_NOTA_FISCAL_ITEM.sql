@@ -23,12 +23,16 @@ CREATE PROCEDURE P_NOTA_FISCAL_ITEM
     @pAliquotaIcms decimal(18,5),
     @pValorIcms decimal(18,5),
     @pNomeProduto varchar(50),
-    @pCodigoProduto varchar(20)
+    @pCodigoProduto varchar(20), 
+	@pBaseIpi decimal(18,5), 
+	@pAliquotaIpi decimal(18,5),
+	@pValorIpi decimal(18,5),
+	@pDesconto decimal(18,5)
 )
 AS
 BEGIN
-	IF (@pId = 0)
-	BEGIN 		
+	IF(@pId = 0)
+	BEGIN
 		INSERT INTO [dbo].[NotaFiscalItem]
            ([IdNotaFiscal]
            ,[Cfop]
@@ -37,7 +41,13 @@ BEGIN
            ,[AliquotaIcms]
            ,[ValorIcms]
            ,[NomeProduto]
-           ,[CodigoProduto])
+           ,[CodigoProduto]
+		   ,[BaseIpi]
+		   ,[AliquotaIpi]
+		   ,[ValorIpi]
+		   ,[Desconto]
+
+		   )
 		VALUES
            (@pIdNotaFiscal,
 			@pCfop,
@@ -46,9 +56,15 @@ BEGIN
 			@pAliquotaIcms,
 			@pValorIcms,
 			@pNomeProduto,
-			@pCodigoProduto)
+			@pCodigoProduto, 
+			@pBaseIpi, 
+			@pAliquotaIpi,
+			@pValorIpi,
+			@pDesconto
+			)
 
 		SET @pId = @@IDENTITY
+
 	END
 	ELSE
 	BEGIN
@@ -63,6 +79,8 @@ BEGIN
 			,[CodigoProduto] = @pCodigoProduto
 		 WHERE Id = @pId
 	END	    
+
+
 END
 GO
 GRANT EXECUTE ON dbo.P_NOTA_FISCAL_ITEM TO [public]

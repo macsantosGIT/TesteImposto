@@ -42,7 +42,6 @@ namespace Imposto.Core.Data
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@pId", notaFiscal.Id, dbType: DbType.Int32, direction: ParameterDirection.Output);
-                //param.Add("@pId", notaFiscal.Id);
                 param.Add("pNumeroNotaFiscal", notaFiscal.NumeroNotaFiscal);
                 param.Add("pSerie", notaFiscal.Serie);
                 param.Add("pNomeCliente", notaFiscal.NomeCliente);
@@ -75,6 +74,11 @@ namespace Imposto.Core.Data
                     param.Add("@pValorIcms", item.ValorIcms);
                     param.Add("@pNomeProduto", item.NomeProduto);
                     param.Add("@pCodigoProduto", item.CodigoProduto);
+                    param.Add("@pBaseIpi", item.BaseIpi);
+                    param.Add("@pAliquotaIpi", item.AliquotaIpi);
+                    param.Add("@pValorIpi", item.ValorIpi);
+                    param.Add("@pDesconto", item.Desconto);
+
                     dbCon.Execute(query, param, commandType: CommandType.StoredProcedure);
                 }
 
@@ -82,7 +86,7 @@ namespace Imposto.Core.Data
 
                 return true;
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
                 if (dbCon.State == ConnectionState.Open)
                     dbCon.Close();
@@ -93,6 +97,7 @@ namespace Imposto.Core.Data
 
         public bool Update(NotaFiscal notaFiscal)
         {
+            //stored para atualizar
             throw new NotImplementedException();
         }
     }
