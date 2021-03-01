@@ -14,14 +14,13 @@ namespace TesteImposto
         private Pedido pedido = new Pedido();
 
         INotaFiscalRepository _notaFiscalRepository;
-        
 
-        public FormImposto(INotaFiscalRepository notaFiscalRepository)
+        public FormImposto()
         {
             InitializeComponent();
             dataGridViewPedidos.AutoGenerateColumns = true;                       
             dataGridViewPedidos.DataSource = GetTablePedidos();
-            _notaFiscalRepository = notaFiscalRepository;
+            _notaFiscalRepository = new NotaFiscalRepository();
             ResizeColumns();
         }
 
