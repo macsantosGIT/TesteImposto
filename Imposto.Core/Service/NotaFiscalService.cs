@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using Dapper;
 using System.Data;
 using Imposto.Core.Util;
+using System.Configuration;
 
 namespace Imposto.Core.Service
 {
@@ -41,7 +42,7 @@ namespace Imposto.Core.Service
             var ok = GerarXML(notaFiscal, nomeArquivo);
 
             if(ok)
-                ok = _notaFiscalRepository.Insert(notaFiscal);
+                ok = InserirNotaFiscal(notaFiscal);
 
             return ok;
         }
@@ -50,7 +51,7 @@ namespace Imposto.Core.Service
         {
             try
             {
-                string caminho = @"D:/Entrevistas/Teste/Nota" + nomeArquivo + ".xml";
+                string caminho = $"{ConfigurationManager.AppSettings["pastaXML"]}Nota{nomeArquivo}.xml";
 
                 FileStream stream = new FileStream(caminho, FileMode.Create);
                 XmlSerializer serializador = new XmlSerializer(obj.GetType());
@@ -58,7 +59,7 @@ namespace Imposto.Core.Service
                 stream.Close();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
